@@ -3,13 +3,17 @@
 #include <fcntl.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include <errno.h>
 
 #define MAX 1024
 
-int main(int argc, char* argv[]){
+void terminate(char* msg);
 
+int main(int argc, char* argv[]){
+	
+	if(argc <= 1) terminate("Za malo argumentow");		
 	int fd;
-	fd = open(argv[1], O_RDWR);
+	if((fd = open(argv[1], O_RDWR))<0) terminate("Blad przy otwarciu pliku");
 
 	char x;
 	while(read(fd, &x, 1)>0){
@@ -21,7 +25,18 @@ int main(int argc, char* argv[]){
 	}
 		  char text[]="Plik jest tekstowy \n";
 		  write(1, text, sizeof(text));
-
+	
+	if(close(fd)<0) terminate("Blad przy zamknieciu pliku");
 	return 0;
 }
 
+void terminate(char *msg){
+
+	if(errno!=0){
+		perror(msg);
+	}
+	else{
+		fprintf(stderr, "ERROR: %s\n", msg);
+	}
+	exit(1);
+}
