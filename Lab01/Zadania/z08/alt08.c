@@ -10,8 +10,7 @@ void terminate(char *msg);
 
 int main(int argc, char* argv[]){
 
-	if(argc <= 0) terminate("Za malo argumentow");
-	else if(argc==1){
+	 if(argc==1){
 		char x;
 		char buf[MAX];
 		int iter=0;
