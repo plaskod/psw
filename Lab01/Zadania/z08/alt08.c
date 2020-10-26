@@ -14,8 +14,6 @@ int main(int argc, char* argv[]){
 	int fd;
 	if((fd= open(argv[1], O_RDWR))<0) terminate("Blad przy otwarciu pliku");
 	char x;
-	char buf[MAX];
-	int iter=0;
 	while((read(fd, &x, 1)>0)){
 		int tmp=x;	
 		if(tmp >= 65 && tmp <= 90){
@@ -24,19 +22,19 @@ int main(int argc, char* argv[]){
 
 		else if(tmp >= 97 && tmp <= 122){
 			tmp-=32;
-		}
-		if(tmp == '\n'){
-			buf[iter]='\n';
-		}
-		else{
-			buf[iter]=tmp;
+		
 		}
 
-		iter++;
+		lseek(fd, -1, SEEK_CUR);
+		if(tmp == '\n'){
+			write(fd, "\n", 1);
+		}
+		else{	
+			char temp=tmp;
+			write(fd,&temp,1);
+		}
 	
 	}
-	lseek(fd, 0, SEEK_SET);
-	write(fd,buf,iter);
 	if(close(fd)<0) terminate("Blad przy zamknieciu pliku");
 	return 0;
 }
