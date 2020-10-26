@@ -4,6 +4,8 @@
 #include <stdbool.h>
 #include <ctype.h>
 
+#define MAX 1024
+
 int main( int argc, char* argv[]){
 
 	int fd;
@@ -14,11 +16,19 @@ int main( int argc, char* argv[]){
 	while(read(fd, &x, 1)>0){
 		if (isascii(x)!=true){
 			tekst=false;
+			break;
 		}
 	}
-	if(tekst) printf("Plik tekstowy \n");
-	else printf("Plik nie tekstowy \n");
 
+
+	if(tekst){
+		 char text[]= "Plik tekstowy \n"; 
+		 write(2, text ,sizeof(text));
+	}
+	else{
+		 char text[]="Plik nie tekstowy \n";
+		 write(2, text, sizeof(text));
+	}
 
 	return 0;
 }
