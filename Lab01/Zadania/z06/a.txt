@@ -1,3 +1,4 @@
+zero null
 raz dwa trzy
 cztery piec szesc siedem osiem 
 dziewiec dziesiec

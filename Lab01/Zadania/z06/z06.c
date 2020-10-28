@@ -21,20 +21,20 @@ int main(int argc, char* argv[]){
 		read(fd,&z,1);
 		write(fd2,&z,1);
 	}
+	write(fd2,"\n",1);	
 	write(fd2,"\n",1);
-	
+
 	char buf[MAX];
 	int iter=0;	
 	int num_of_words=0;
 	int filesize;
 	filesize=lseek(fd,0,SEEK_END);
-	
 	char x;	
-	for(int i=filesize -1; i>=0; i--){
+	for(int i=filesize-1; i>=0; i--){
 		lseek(fd,i,SEEK_SET);
 		read(fd, &x,1);
 		
-		if(num_of_words == 10 && ( x==' ' || x=='\n')){
+		if(num_of_words == 10 && (x==' ' || x=='\n')){
 			num_of_words++;
 			break;
 		}
@@ -54,16 +54,39 @@ int main(int argc, char* argv[]){
 		}
 	}
 	
-	lseek(fd,0,SEEK_END);
-	for(int j= iter-1; j>=0; j--){
+	for(int j=iter-1; j>=0; j--){
 			
 		write(fd2,&buf[j],1);
-	}
-	
+	}	
 	write(fd2,"\n",1);
-	
 
-
+	lseek(fd,0,SEEK_END);
+	char line[MAX];
+	char l;
+	int num_of_lines=0;
+	int it=0;
+	for(int i=filesize-1; i>=0; i--){
+		lseek(fd,i,SEEK_SET);
+		read(fd, &l, 1);
+		if(num_of_lines==10 && l=='\n'){
+			num_of_lines++;
+			line[it]='\n';
+			it++;
+			break;
+		}
+		else if(l=='\n'){
+			num_of_lines++;
+			line[it]='\n';
+			it++;
+		}
+		else{
+			line[it]=l;
+			it++;
+		}
+	}	
+	for(int k=it-1;k>=0;k--){
+		write(fd2,&line[k],1);
+	}
 
 
 
