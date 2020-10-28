@@ -6,18 +6,8 @@
 
 #define MAX 1024		
 
+void terminate(char* msg);
 
-void terminate(char *msg){
-
-	if(errno!=0){
-		perror(msg);
-	}
-
-	else{
-		fprintf(stderr, "ERROR: %s\n", msg);
-	}
-	exit(1);
-}
 int main(int argc, char* argv[]){
 
 	if(argc <= 1) terminate("Za malo argumentow");
@@ -44,13 +34,18 @@ int main(int argc, char* argv[]){
 		lseek(fd,i,SEEK_SET);
 		read(fd, &x,1);
 		
-		if(num_of_words == 9 && x==' '){
+		if(num_of_words == 10 && ( x==' ' || x=='\n')){
 			num_of_words++;
 			break;
-		}	
+		}
 		else if(x==' '){
 			num_of_words++;
-			buf[iter]=' ';
+			buf[iter]=x;
+			iter++;
+		}
+		else if(x=='\n'){
+			num_of_words++;
+			buf[iter]='\n';
 			iter++;
 		}
 		else{
@@ -58,8 +53,9 @@ int main(int argc, char* argv[]){
 			iter++;
 		}
 	}
-
-	for(int j=iter; j>=0; j--){
+	
+	lseek(fd,0,SEEK_END);
+	for(int j= iter-1; j>=0; j--){
 			
 		write(fd2,&buf[j],1);
 	}
@@ -74,5 +70,16 @@ int main(int argc, char* argv[]){
 	if(close(fd)<0) terminate("Blad przy zamknieciu pliku nr 1");
 	if(close(fd2)<0) terminate("Blad przy zamknieciu pliku nr 2");
 	return 0;
+}
+void terminate(char *msg){
+
+	if(errno!=0){
+		perror(msg);
+	}
+
+	else{
+		fprintf(stderr, "ERROR: %s\n", msg);
+	}
+	exit(1);
 }
 
