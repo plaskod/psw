@@ -15,7 +15,7 @@ int main(int argc, char* argv[]){
 	if((fd= open(argv[1], O_RDONLY))<0) terminate("Blad przy otwarciu pliku nr. 1");	
 	if((fd2= open(argv[2], O_WRONLY))<0) terminate("Blad przy otwarciu pliku nr. 2");
 	
-	lseek(fd,-10,SEEK_END);
+	lseek(fd,-11,SEEK_END);
 	char z;
 	for(int i=0; i<10; i++){
 		read(fd,&z,1);
