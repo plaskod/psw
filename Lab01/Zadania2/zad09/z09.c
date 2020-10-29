@@ -20,7 +20,7 @@ int main(int argc, char* argv[]){
 		while((n=read(fd,buf,MAX))>0){
 			write(dest,buf,n);
 		}
-		
+		if(close(fd)<0) terminate("Blad przy zamykaniu pliku do odczytu");			
 	}
 	else{
 		if((dest=open(argv[argc-1], O_WRONLY))<0) terminate("Blad przy otwarciu pliku docelowego");
