@@ -35,7 +35,7 @@ int main(int argc, char* argv[]){
 					strcat(ans,tmp);
 				}
 				
-				memset(buf,'\n',MAX);	
+				memset(buf,'\0',MAX);	
 				num_chars=0;
 			}
 			else{
