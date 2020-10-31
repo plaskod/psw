@@ -11,6 +11,7 @@
 #include <string.h>
 
 #define MAX 1024
+#define TXT 100
 
 void terminate(const char msg[]);
 
@@ -22,10 +23,15 @@ int main(int argc, char* argv[]){
 		terminate("Nie podano nazw plikow\n");
 	}
 	else{
+
 		char ss[MAX];
 		strcpy(ss,argv[1]);
-		for(int i=2;i<=argc;i++){
-			char msg[]="Blad przy otwarciu pliku: ";
+		write(1,"Szukany lancuch to: ",sizeof("Szukany lancuch to: "));
+		write(1,ss,strlen(ss));
+		write(1,"\n",1);
+
+		for(int i=2;i<argc;i++){
+			char msg[TXT]="Blad przy otwarciu pliku: ";
 			strcat(msg,argv[i]);
 			int fd;
 			if((fd=open(argv[i],O_RDONLY))<0) terminate(msg);
@@ -36,37 +42,41 @@ int main(int argc, char* argv[]){
 			while((read(fd,&x,1)>0)){
 				buf[iter]=x;
 				if(x=='\n'){
+					char tmp[MAX]="";
+					strncpy(tmp,buf,iter+1);
 					char *zawiera;
-					zawiera=strstr(buf,ss);
+					zawiera=strstr(tmp,ss);
 					if(zawiera){
-						char m1[]="Lancuch znaleziono w pliku: ";
+						char m1[TXT]="Lancuch znaleziono w pliku: ";
 						strcat(m1,argv[i]);
-						char m2[]=" w linii nr.: ";
+						char m2[TXT]=" w linii nr.: ";
 						strcat(m1,m2);
-	//					char linia[8];
-	//					sprintf(linia,"%d",line_num);
-	//					strcat(m1,linia);
-						char m3[]=" oraz numerze znaku: ";
+						char linia[8];
+						sprintf(linia,"%d",line_num);
+						strcat(m1,linia);
+						char m3[TXT]=" oraz numerze znaku: ";
 						strcat(m1,m3);
-	//					int miejsce;
-	//					miejsce=zawiera-buf;
-	//					char pozycja[8];
-	//					sprintf(pozycja, "%d",miejsce);
-	//					strcat(m1,pozycja);
-						char tab[]="\n";
-						strcat(m1,tab);
+						int miejsce;
+						miejsce= zawiera-tmp+1;
+						char pozycja[8];
+						sprintf(pozycja, "%d",miejsce);
+						strcat(m1,pozycja);
 
 						write(1,m1,strlen(m1));
+						write(1,"\n",1);
 						
-						memset(buf,'\0',MAX);
 					}
 
+					memset(buf,'\0',MAX);
+					iter=0;
 					line_num++;
 				}
-				iter++;
+				else{
+					iter++;
+				}
 			}
 			
-			char msg2[]="Blad przy zamknieciu pliku: ";
+			char msg2[TXT]="Blad przy zamknieciu pliku: ";
 			strcat(msg2,argv[i]);
 			if(close(fd)<0) terminate(msg2);
 					
