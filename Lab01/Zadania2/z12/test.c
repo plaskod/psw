@@ -16,45 +16,14 @@
 void terminate(const char msg[]);
 
 int main(int argc, char* argv[]){
-	
-	if(argc==2){
-		char ss[MAX];
-		strcpy(ss,argv[1]);
-		char ans[MAX]="";
-		char buf[MAX]="";
-		int num_chars=0;
-		char y;
-		while((read(1,&y,1)>0)){
-			buf[num_chars]=y;	
-			if(y=='\n'){
-				//buf[num_chars+1]='\n';
-				char tmp[MAX]="";
-				strncpy(tmp,buf,num_chars+1);
-				char *zawiera;
-				zawiera=strstr(tmp,ss);
-				if(zawiera){
-					strcat(ans,tmp);
-					int len=strlen(ans);
-					ans[len+1]='%';
-				}
-				
-				memset(buf,'\n',MAX);	
-				num_chars=0;
-			}
-			else{
-				num_chars++;
-			}
-		}
-		write(1,"\n",1);
-		write(1,ans,sizeof(ans));
-
-	}
-	else if(argc==1){
-		terminate("Nie podano lancucha znakow\n");
-	}
-	else{
-		terminate("Podano zbyt duzo argumentow\n");
-	}
+	char s[MAX]="";
+	s[0]='b';
+	s[1]='3';
+	char t[MAX]="";
+	strncpy(t,s,1);
+	write(1,s,strlen(s));
+	write(1,"\n",1);
+	write(1,t,strlen(t));	
 	return 0;
 }
 
