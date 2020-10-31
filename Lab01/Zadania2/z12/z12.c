@@ -44,6 +44,7 @@ int main(int argc, char* argv[]){
 			}
 		}
 		write(1,"\n",1);
+		write(1,"---WYNIK---\n",sizeof("---WYNIK---\n"));
 		write(1,ans,sizeof(ans));
 
 	}
