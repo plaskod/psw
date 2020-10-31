@@ -34,8 +34,6 @@ int main(int argc, char* argv[]){
 				zawiera=strstr(tmp,ss);
 				if(zawiera){
 					strcat(ans,tmp);
-					int len=strlen(ans);
-					ans[len+1]='%';
 				}
 				
 				memset(buf,'\n',MAX);	
