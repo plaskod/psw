@@ -27,7 +27,6 @@ int main(int argc, char* argv[]){
 		while((read(1,&y,1)>0)){
 			buf[num_chars]=y;	
 			if(y=='\n'){
-				//buf[num_chars+1]='\n';
 				char tmp[MAX]="";
 				strncpy(tmp,buf,num_chars+1);
 				char *zawiera;
