@@ -66,7 +66,6 @@ int main(int argc, char* argv[]){
 						strcat(m,m2);
 
 						write(1,m,strlen(m));
-						write(1,"\n",1);
 					}
 					else if((zawiera||zawiera2) && strlen(buf)!=strlen(buf2)){
 						int a=strlen(buf);
