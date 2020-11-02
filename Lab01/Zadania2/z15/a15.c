@@ -24,6 +24,11 @@ int main(int argc, char* argv[]){
 	}
 	else{	
 		int odwiedzone[argc][argc];
+		for(int p=0;p<argc;p++){
+			for(int p2=0; p2<argc;p2++){
+				odwiedzone[p][p2]=0;
+			}
+		}
 		for(int i=1;i<argc;i++){
 			for(int j=1;j<argc;j++){
 				if(i==j){
@@ -61,6 +66,7 @@ int main(int argc, char* argv[]){
 						strcat(m,m2);
 
 						write(1,m,strlen(m));
+						write(1,"\n",1);
 					}
 					else if((zawiera||zawiera2) && strlen(buf)!=strlen(buf2)){
 						int a=strlen(buf);
@@ -77,7 +83,8 @@ int main(int argc, char* argv[]){
 							strcat(m1,m2);
 							strcat(m1,argv[j]);
 							strcat(m,m1);							
-							write(1,m,strlen(m));	
+							write(1,m,strlen(m));
+							write(1,"\n",1);	
 						}
 						else{
 							int dlg=b-a;
@@ -85,13 +92,45 @@ int main(int argc, char* argv[]){
 							sprintf(dlugosc,"%d",dlg);
 							char m[TXT]="Plik: ";
 							strcat(m,argv[j]);
-							char m1[]=" zawiera: ";
+							char m1[TXT]=" zawiera: ";
 							strcat(m1,dlugosc);
-							char m2[]=" znakow wiecej niz zawartosc pliku: ";
+							char m2[TXT]=" znakow wiecej niz zawartosc pliku: ";
 							strcat(m1,m2);
 							strcat(m1,argv[i]);
 							strcat(m,m1);							
 							write(1,m,strlen(m));	
+							write(1,"\n",1);	
+						}
+					}
+					else{
+						int linia=1;
+						int pozycja_znaku=1;
+						for(int k=0;k<=strlen(buf);k++){
+							if(buf[k]=='\n'){
+								linia++;
+								pozycja_znaku=0;
+							}
+							if(buf[k]!=buf2[k]){
+								char m[TXT]="Pliki: ";
+								strcat(m,argv[i]);
+								char space[]=" ";
+								strcat(m,space);
+								strcat(m,argv[j]);
+								char mn[]=" roznia sie od znaku nr.: ";
+								strcat(m,mn);
+								char pos[sizeof(int)];
+								sprintf(pos,"%d",pozycja_znaku);
+								strcat(m,pos);
+								char m2[TXT]=" w linii: ";
+								char lin[sizeof(int)];
+								sprintf(lin,"%d",linia);
+								strcat(m2,lin);
+								strcat(m,m2);
+								write(1,m,strlen(m));	
+								write(1,"\n",1);	
+								break;
+							}
+							pozycja_znaku++;
 						}	
 					}
 
