@@ -8,7 +8,7 @@ int main(){
 
 	printf("--------Poczatek listy----------\n");
 	if(fork()==0){
-		execlp("ps","ps", "--no-headers", NULL);
+		execlp("ps","ps","-a", "--no-headers", NULL);
 		exit(1);
 	}
 	
