@@ -15,7 +15,7 @@
 
 int main(int argc, char* argv[]){
 	int pdesk;
-	if(mkfifo("/tmp/fifo",0777)==-1){
+	if(mkfifo("/tmp/fifo",0666)==-1){
 		perror("Tworzenie kolejki FIFO");
 		exit(1);
 	}
@@ -51,8 +51,8 @@ int main(int argc, char* argv[]){
 			execlp("wc", "wc", NULL);
 			perror("Problem przy uruchamianiu wc");
 			exit(1);
-
+			unlink("/tmp/fifo");
 	}
-
+	
 
 }
