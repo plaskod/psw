@@ -14,11 +14,13 @@
 
 
 int main(int argc, char* argv[]){
+	unlink("/tmp/fifo");
 	int pdesk;
 	if(mkfifo("/tmp/fifo",0666)==-1){
 		perror("Tworzenie kolejki FIFO");
 		exit(1);
 	}
+
 	switch(fork()){
 
 		case -1:
@@ -26,7 +28,7 @@ int main(int argc, char* argv[]){
 			exit(1);
 		case 0: //proces potomny
 			close(1);
-			pdesk=open("/tmp/fifo",O_WRONLY);
+			pdesk=open("/tmp/fifo",O_WRONLY,O_NONBLOCK);
 			if (pdesk==-1){
 				perror("Otwarcie potoku do zapisu");
 				exit(1);
@@ -34,11 +36,12 @@ int main(int argc, char* argv[]){
 			}
 			execlp("ls","ls",NULL);
 			perror("Uruchomienie ls");
+			
 			exit(1);
 
 		default: //proces macierzysty
 			close(0);
-			pdesk=open("/tmp/fifo",O_RDONLY);
+			pdesk=open("/tmp/fifo",O_RDONLY,O_NONBLOCK);
 			if(pdesk == -1){
 				perror("Otwarcie potoku do odczytu");
 				exit(1);
@@ -50,8 +53,8 @@ int main(int argc, char* argv[]){
 			}
 			execlp("wc", "wc", NULL);
 			perror("Problem przy uruchamianiu wc");
+			close(pdesk);
 			exit(1);
-			unlink("/tmp/fifo");
 	}
 	
 

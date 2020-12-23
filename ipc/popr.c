@@ -26,6 +26,8 @@ int main(int argc, char* argv[]){
 			dup2(pdesk[1],1);
 			close(pdesk[0]);
 			execlp("tr","tr","-s","' '",":",NULL);
+			close(pdesk[1]);///
+			close(pdesk[0]);///
 			exit(1);
 
 		}
@@ -40,6 +42,8 @@ int main(int argc, char* argv[]){
 				dup2(pdesk[1],1);
 				close(pdesk[0]);
 				execlp("cut","cut","-d:","-f1",NULL);
+				close(pdesk[1]);///
+				close(pdesk[0]);///
 				exit(1);
 			}
 			else{
@@ -54,6 +58,8 @@ int main(int argc, char* argv[]){
 					dup2(pdesk[1],1);
 					close(pdesk[0]);
 					execlp("sort", "sort",NULL);
+					close(pdesk[1]);///
+					close(pdesk[0]);///
 					exit(1);
 				}
 
@@ -67,6 +73,8 @@ int main(int argc, char* argv[]){
 						dup2(fd,0);
 						close(pdesk[0]);
 						execlp("uniq","uniq","-c",NULL);
+						close(pdesk[1]);///
+						close(pdesk[0]);///
 						exit(1);
 						
 					}
@@ -80,11 +88,15 @@ int main(int argc, char* argv[]){
 							dup2(fd,0);
 							close(pdesk[0]);
 							execlp("sort", "sort" "n", NULL);
+							close(pdesk[1]);///
+							close(pdesk[0]);///
 							exit(1);	
 						}
-
 						else{
 							wait(NULL);
+							close(pdesk[0]);///
+							close(pdesk[1]);///
+
 						}
 					}
 

@@ -21,9 +21,14 @@ int main(int argc, char* argv[]){
 	s[1]='3';
 	char t[MAX]="";
 	strncpy(t,s,1);
-	write(1,s,strlen(s));
-	write(1,"\n",1);
-	write(1,t,strlen(t));	
+	char m1[]="Lancuch znaleziono w pliku: ";
+	char m2[]=" w linii nr.: ";
+	strcat(m1,m2);
+	char m3[]=" oraz numerze znaku: ";
+	strcat(m1,m3);
+	write(1,m1,strlen(m1));
+
+
 	return 0;
 }
 

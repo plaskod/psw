@@ -13,6 +13,7 @@ int main(int argc, char* argv[]){
 	if(fork()==0){
 		dup2(pdesk[1],1);
 		close(pdesk[0]);
+		close(pdesk[1]);///
 		execlp("ps","ps","-ef",NULL);
 		exit(1);
 	}
@@ -25,6 +26,7 @@ int main(int argc, char* argv[]){
 			dup2(fd,0);
 			dup2(pdesk[1],1);
 			close(pdesk[0]);
+			close(pdesk[1]);///
 			execlp("tr","tr","-s","' '",":",NULL);
 			exit(1);
 
@@ -39,12 +41,14 @@ int main(int argc, char* argv[]){
 				dup2(fd,0);
 				dup2(pdesk[1],1);
 				close(pdesk[0]);
+				close(pdesk[1]);///
 				execlp("sort","sort",NULL);
 				exit(1);
 			}
 			else{
 				wait(NULL);
 				close(pdesk[1]);
+				close(pdesk[0]);///
 				fd=pdesk[0];
 				pipe(pdesk);
 
@@ -53,6 +57,7 @@ int main(int argc, char* argv[]){
 					dup2(fd,0);
 					dup2(pdesk[1],1);
 					close(pdesk[0]);
+					close(pdesk[1]);///
 					execlp("uniq", "uniq","-c",NULL);
 					exit(1);
 				}
@@ -66,6 +71,7 @@ int main(int argc, char* argv[]){
 					if(fork()==0){
 						dup2(fd,0);
 						close(pdesk[0]);
+						close(pdesk[1]);///
 						execlp("sort","sort","-n",NULL);
 						exit(1);
 						

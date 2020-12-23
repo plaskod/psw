@@ -17,7 +17,7 @@ void terminate(const char msg[]);
 
 int main(int argc, char* argv[]){
 	if(argc==1){
-		terminate("Nie podano lancucha znakow i nazw plikow\n");	
+		terminate("Nie podano lancucha znakow albo nazw plikow\n");	
 	}
 	else if(argc==2){
 		terminate("Nie podano nazw plikow\n");
@@ -51,14 +51,14 @@ int main(int argc, char* argv[]){
 						strcat(m1,argv[i]);
 						char m2[TXT]=" w linii nr.: ";
 						strcat(m1,m2);
-						char linia[8];
+						char linia[sizeof(int)];
 						sprintf(linia,"%d",line_num);
 						strcat(m1,linia);
 						char m3[TXT]=" oraz numerze znaku: ";
 						strcat(m1,m3);
 						int miejsce;
 						miejsce= zawiera-tmp+1;
-						char pozycja[8];
+						char pozycja[sizeof(int)];
 						sprintf(pozycja, "%d",miejsce);
 						strcat(m1,pozycja);
 
@@ -79,9 +79,6 @@ int main(int argc, char* argv[]){
 			char msg2[TXT]="Blad przy zamknieciu pliku: ";
 			strcat(msg2,argv[i]);
 			if(close(fd)<0) terminate(msg2);
-					
-			
-				
 		}
 	}
 	return 0;
